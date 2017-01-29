@@ -31,7 +31,7 @@ public class BattlefieldHelperTest {
                     + "☼˂                               ☼"
                     + "☼            ╞╬╬  ╠╬╣            ☼"
                     + "☼  ╦╬╣  ┌╬┐  ╬╩╡  ╬╞╬  ╞╬╦  ╦╥╦  ☼"
-                    + "☼  ╬╬╥  ╞╬╣  ╣╣◄ ˅╠╦╬  ╬╬╬  ╠╬╬  ☼"
+                    + "☼  ╬╬╥  ╞╬╣  ˅╣► ˅╠╦╬  ╬╬╬  ╠╬╬  ☼"
                     + "☼  ╦╬╬  ╬╬┘  ╞╬╬╬╥╠╬╡  ╬╬╬  ╬╬╡  ☼"
                     + "☼  ┌╬╣  ╬╬╬  ╬╞╣┘╬╬╬╬  ╬╬╬  ╬╬│  ☼"
                     + "☼  ╦╬╬  ╬╬╣  ╬╬╣  ╬╬╬  ╠╬╬  ╠╬╬  ☼"
@@ -48,6 +48,42 @@ public class BattlefieldHelperTest {
     //our coordinates: (15:20)
     //enemy coordinates: (4:14)
     //LEFT, ACT;
+
+    private String battlefieldString2 =
+            "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
+            "☼?      Ѡ        •«              ☼" +
+            "☼                      ˃       « ☼" +
+            "☼  ╥╦╥  ╦╬╦  ╥╥╥  ╥╦╬  ╦ ╬  ╬┌╥  ☼" +
+            "☼  ╦╦╥  ╬╥╬  ╬╥╬¿ ╬╬╥  ╞╬╥  ╬╥╦  ☼" +
+            "☼  ╦╬╡  ╬╬╬  ╞╣╣  ╬╥╦  ╠╡╣  ╬╥╣  ☼" +
+            "☼  ╬╬╬  ╠╣╣  ╠╬╬¿ ╞╠╣  ╬╬╣  ╠╡╬  ☼" +
+            "☼¿ ╬╬╩  ╠╬╬  ╠╬╬☼☼╬╬╣  ╬╬╬  ╞╬╡  ☼" +
+            "☼  ╠╬╬  ╞╬┘  ╠╬╬☼☼╬╬╣  ╬╣╬  ╬╣╬ ˂☼" +
+            "☼  ╠╬╬  ╞╩╬  ╬╬╣▲ ╞└╠  ╬╞╬˄ ╠╬╡  ☼" +
+            "☼  ╞╣╬  ╬╬╡  ╞╬╦  ╨╬╡  ╬╬╬  ╡╬╡  ☼" +
+            "☼  └╨╬  ╬╬╣   ˃        ╬╬╬  ╠╬╣  ☼" +
+            "☼  ╬╬╩  ╬╣╬            ╞╠┘  ╨╬╬  ☼" +
+            "☼            ╬╠╠  ╬╬╬ •          ☼" +
+            "☼            ╬╞╡  │╬╣            ☼" +
+            "☼     ¿╦┌╣┐  └╩╬  ╩╣╬  ┌╥╬╨╦     ☼" +
+            "☼☼☼   ╬╩│╬╡            ╬╬╩ ╨   ☼☼☼" +
+            "☼ ˃                      ˄       ☼" +
+            "☼            ╞╠╠  ╬╬╣            ☼" +
+            "☼  ╦╬╬  ╞╥╣  ╬╦╬  ╬╬╬  ╥╬╣  ╬╦┐  ☼" +
+            "☼  ╬╥╦  ╞╬╬  ╠╣╣  ╞╣╬  ╬╦╦   ╥┐  ☼" +
+            "☼  ╠╬┐  ╬╬╡  ╠╬╥╦╨╠╣╬ ˄╬╬╣  ╬╬╦  ☼" +
+            "☼  ╠╬╣  ╬╬╬  ╞╬╥╬╬╬╣╦  │╬╡  ┌╬╣  ☼" +
+            "☼• ╠╬╬  ╞╬╬  ╠╬╬  ╬╣╣  ╬╨╡  ╬╣╬  ☼" +
+            "☼  ╠╬╬  ╬╬╬  ╩╬╣  ╬╩╬  ╬╬╬  ╞╣╣  ☼" +
+            "☼  ╬╬╬  ╬╬╣• ╠╡╣  ╠╬╣  ╩╬╬  ╬╬╬  ☼" +
+            "☼  ╬╣╬  ╩╨╨  ╩╩╬  ╩╩╩  ╬╬╨  ╞╣╣  ☼" +
+            "☼  ╬╣╬           •          ╞╬╣  ☼" +
+            "☼  ╬╣╣                      ╠╬╠  ☼" +
+            "☼  ╠╬╣       ╬┌╩╬ ╩╬╡       ╠╨╬  ☼" +
+            "☼  ╬╣╬       ╞╠╩╬ ╩╬╬       ╬╬╣  ☼" +
+            "☼      ˃     ╬╞    ╠╡            ☼" +
+            "☼            ╬╡   ˅╣╡            ☼" +
+            "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼";
 
     @Test
     public void getOurTank() {
@@ -85,4 +121,13 @@ public class BattlefieldHelperTest {
         Assert.assertNotNull(BattlefieldHelper.findNearestTankOnTheCross(BattlefieldHelper.getBattlefield(battlefieldString)));
     }
 
+    @Test
+    public void findNearestTankOnTheCrossTest2() {
+        Assert.assertNull(BattlefieldHelper.findNearestTankOnTheCross(BattlefieldHelper.getBattlefield(battlefieldString2)));
+    }
+
+    @Test
+    public void weLookAtEnemiesTest() {
+        Assert.assertTrue(BattlefieldHelper.weLookAtEnemies(BattlefieldHelper.getBattlefield(battlefieldString), new Tank(20, 17, TankOrientation.DOWN)));
+    }
 }

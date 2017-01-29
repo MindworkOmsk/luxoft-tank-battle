@@ -18,7 +18,7 @@ public class WebSocketClient {
 
     private static final String SERVER = "ws://battlecity.luxoft.com:8080/codenjoy-contest/ws";
 
-    private static String userName = "IKarmatskikh2@luxoft.com";
+    private static String userName = "IKarmatskikh@luxoft.com";
 
     private static Pattern urlPattern = Pattern.compile("^board=(.*)$");
     private static WebSocketClient client;
@@ -79,7 +79,7 @@ public class WebSocketClient {
                 for (int i = 0; i < clearString.length(); i = i + strLength) {
                     out.append(clearString.substring(i, i + strLength)).append("\n");
                 }
-                System.out.println(out);
+
                 try {
                     connection.sendMessage(answer);
                 } catch (IOException e) {

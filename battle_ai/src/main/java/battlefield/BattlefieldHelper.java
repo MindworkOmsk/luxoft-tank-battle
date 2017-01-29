@@ -73,8 +73,8 @@ public class BattlefieldHelper {
     public static String turnTank(BattlefieldHolder battlefield, Tank victim) {
         Tank ourTank = battlefield.getOurTank();
 
-        System.out.println("our coordinates: (" + ourTank.getPositionX() + ":" + ourTank.getPositionY() + ")");
-        System.out.println("enemy coordinates: (" + victim.getPositionX() + ":" + victim.getPositionY() + ")");
+        //System.out.println("our coordinates: (" + ourTank.getPositionX() + ":" + ourTank.getPositionY() + ")");
+        //System.out.println("enemy coordinates: (" + victim.getPositionX() + ":" + victim.getPositionY() + ")");
         String action = "";
 
         //X DIMENSION decision
@@ -123,7 +123,7 @@ public class BattlefieldHelper {
 
         String symbol = battlefield.getBattlefieldMatrix()[nextCellCoordinates[0]][nextCellCoordinates[1]];
 
-        if (!Constructions.isConstruction(symbol) || symbol.equals(Constants.WALL)) {
+        if (!Constructions.isConstruction(symbol) || symbol.equals(Constants.WALL) || symbol.equals(Constants.BULLET)) {
             validatedActionString = actionString;
         } else {
             validatedActionString = "";
@@ -138,24 +138,36 @@ public class BattlefieldHelper {
 
         //get distance to all tanks
         for (Tank enemyTank : battlefield.getEnemyTanks()) {
+            boolean tankCorrupted = false;
+
             if (ourTank.getPositionX() - enemyTank.getPositionX() == 0) {
                 //check top
                 //walls between our tank and enemy are exists?
-                for (int i = ourTank.getPositionY() - 1; i > enemyTank.getPositionY(); i--) {
-                    if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])
-                            || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])) {
-                        break;
-                    } else {
+                if (enemyTank.getPositionY() < ourTank.getPositionY()) {
+                    for (int i = ourTank.getPositionY() - 1; i > enemyTank.getPositionY(); i--) {
+                        if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])
+                                || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])) {
+                            tankCorrupted = true;
+                            break;
+                        }
+                    }
+
+                    if (!tankCorrupted) {
                         distanceMap.put(enemyTank, new Integer[]{enemyTank.getPositionX(), enemyTank.getPositionY()});
                     }
                 }
 
                 //check bottom
-                for (int i = ourTank.getPositionY() + 1; i < BattlefieldHelper.DIMENSION; i++) {
-                    if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])
-                            || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])) {
-                        break;
-                    } else {
+                if (enemyTank.getPositionY() > ourTank.getPositionY()) {
+                    for (int i = ourTank.getPositionY() + 1; i < enemyTank.getPositionY(); i++) {
+                        if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])
+                                || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][i])) {
+                            tankCorrupted = true;
+                            break;
+                        }
+                    }
+
+                    if (!tankCorrupted) {
                         distanceMap.put(enemyTank, new Integer[]{enemyTank.getPositionX(), enemyTank.getPositionY()});
                     }
                 }
@@ -163,21 +175,31 @@ public class BattlefieldHelper {
 
             if (ourTank.getPositionY() - enemyTank.getPositionY() == 0) {
                 //check right
-                for (int i = ourTank.getPositionX() + 1; i < BattlefieldHelper.DIMENSION; i++) {
-                    if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])
-                            || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])) {
-                        break;
-                    } else {
+                if (ourTank.getPositionX() < enemyTank.getPositionX()) {
+                    for (int i = ourTank.getPositionX() + 1; i < enemyTank.getPositionX(); i++) {
+                        if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])
+                                || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])) {
+                            tankCorrupted = true;
+                            break;
+                        }
+                    }
+
+                    if (!tankCorrupted) {
                         distanceMap.put(enemyTank, new Integer[]{enemyTank.getPositionX(), enemyTank.getPositionY()});
                     }
                 }
 
                 //check left
-                for (int i = ourTank.getPositionX() - 1; i >= 0; i--) {
-                    if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])
-                            || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])) {
-                        break;
-                    } else {
+                if (ourTank.getPositionX() > enemyTank.getPositionX()) {
+                    for (int i = ourTank.getPositionX() - 1; i > enemyTank.getPositionX(); i--) {
+                        if (Constructions.isConstruction(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])
+                                || Constants.WALL.equals(battlefield.getBattlefieldMatrix()[i][ourTank.getPositionY()])) {
+                            tankCorrupted = true;
+                            break;
+                        }
+                    }
+
+                    if (!tankCorrupted) {
                         distanceMap.put(enemyTank, new Integer[]{enemyTank.getPositionX(), enemyTank.getPositionY()});
                     }
                 }
@@ -198,8 +220,70 @@ public class BattlefieldHelper {
                     nearestTank = tank;
                 }
             }
+/*
+            for (Map.Entry entry : distanceMap.entrySet()) {
+                nearestTank = (Tank) entry.getKey();
+            }
+*/
         }
 
         return nearestTank;
+    }
+
+    public static boolean weLookAtEnemies(BattlefieldHolder battlefield, Tank enemyTank) {
+        boolean weLookAtEnemies = false;
+        Tank ourTank = battlefield.getOurTank();
+
+        //check right
+        if (ourTank.getTankOrientation().getOrientation().equals(Constants.GO_RIGHT) && ourTank.getPositionX() < enemyTank.getPositionX()) {
+            weLookAtEnemies = true;
+        }
+
+        //check left
+        if (ourTank.getTankOrientation().getOrientation().equals(Constants.GO_LEFT) && ourTank.getPositionX() > enemyTank.getPositionX()) {
+            weLookAtEnemies = true;
+        }
+
+        //check down
+        if (ourTank.getTankOrientation().getOrientation().equals(Constants.GO_DOWN) && ourTank.getPositionY() < enemyTank.getPositionY()) {
+            weLookAtEnemies = true;
+        }
+
+        //check up
+        if (ourTank.getTankOrientation().getOrientation().equals(Constants.GO_UP) && ourTank.getPositionY() < enemyTank.getPositionY()) {
+            weLookAtEnemies = true;
+        }
+
+        return weLookAtEnemies;
+    }
+
+    public static String bulletAlarm(BattlefieldHolder battlefield) {
+        Tank ourTank = battlefield.getOurTank();
+        String correctedActionString = "";
+
+        //пуля справа/слева
+        if (battlefield.getBattlefieldMatrix()[ourTank.getPositionX() + 1][ourTank.getPositionY()].equals(Constants.BULLET)
+                || battlefield.getBattlefieldMatrix()[ourTank.getPositionX() - 1][ourTank.getPositionY()].equals(Constants.BULLET)) {
+            //UP, DOWN
+            correctedActionString = aprroveNextCellMoving(battlefield, Constants.GO_UP);
+
+            if (correctedActionString.equals("")) {
+                correctedActionString = aprroveNextCellMoving(battlefield, Constants.GO_DOWN);
+            }
+        }
+
+
+        //пуля снизу, сверху
+        if (battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][ourTank.getPositionY() + 1].equals(Constants.BULLET)
+                || battlefield.getBattlefieldMatrix()[ourTank.getPositionX()][ourTank.getPositionY() - 1].equals(Constants.BULLET)) {
+            //RIGHT, LEFT
+            correctedActionString = aprroveNextCellMoving(battlefield, Constants.GO_RIGHT);
+
+            if (correctedActionString.equals("")) {
+                correctedActionString = aprroveNextCellMoving(battlefield, Constants.GO_LEFT);
+            }
+        }
+
+        return correctedActionString;
     }
 }
